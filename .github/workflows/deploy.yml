@@ -1,0 +1,56 @@
+name: PlayQ_code_build_and_deploy
+env:
+  S3_BUCKET_NAME: "playq-exercise-artifact"
+  AWS_REGION_NAME: "eu-central-1"
+  PROGRAM_NAME: "playq"
+  WALL_PARAMETER: "-Wall"
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  linux-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v2
+
+      - name: g++ build
+        run: |
+          g++ ${{ env.WALL_PARAMETER }} -o ${{ env.PROGRAM_NAME }}-linux.bin code.cpp
+
+      - name: aws creds
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: ${{ env.AWS_REGION_NAME }}
+
+      - name: Copy bin to s3
+        run: |
+          aws s3 cp ./${{ env.PROGRAM_NAME }}-linux.bin s3://${{ env.S3_BUCKET_NAME }}/
+
+  macos-job:
+    runs-on: macos-latest
+
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v2
+
+      - name: g++ build
+        run: |
+          g++ ${{ env.WALL_PARAMETER }} -o ${{ env.PROGRAM_NAME }}-macos.bin code.cpp
+
+      - name: aws creds
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: ${{ env.AWS_REGION_NAME }}
+
+      - name: Copy bin to s3
+        run: |
+          aws s3 cp ./${{ env.PROGRAM_NAME }}-macos.bin s3://${{ env.S3_BUCKET_NAME }}/
