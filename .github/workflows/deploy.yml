@@ -63,6 +63,8 @@ jobs:
     steps:
       - name: Clone repo
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: g++ build
         run: |
