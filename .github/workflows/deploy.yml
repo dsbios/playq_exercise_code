@@ -24,7 +24,7 @@ jobs:
 
       - name: Testing builded bin
         run: |
-          echo foo | ./${{ env.PROGRAM_NAME }}-linux.bin >> test-linux.txt
+          echo foo-linux | ./${{ env.PROGRAM_NAME }}-linux.bin >> test-linux.txt
 
       - name: Commit filesS
         run: |
@@ -71,7 +71,7 @@ jobs:
 
       - name: Testing builded bin
         run: |
-          echo foo | ./${{ env.PROGRAM_NAME }}-macos.bin >> test-macos.txt
+          echo foo-macos | ./${{ env.PROGRAM_NAME }}-macos.bin >> test-macos.txt
 
       - name: Commit files
         run: |
