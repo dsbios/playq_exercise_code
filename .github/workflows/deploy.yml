@@ -30,7 +30,7 @@ jobs:
         run: |
           git config --local user.email "test@test.test"
           git config --local user.name "github-actions[bot]"
-          git add test-linux.txt errors-linux.log
+          git add test-linux.txt
           git commit -m "Upload tests results for linux"
      
       - name: Push changes
@@ -76,7 +76,7 @@ jobs:
         run: |
           git config --local user.email "test@test.test"
           git config --local user.name "github-actions[bot]"
-          git add test-macos.txt errors-macos.log
+          git add test-macos.txt
           git commit -m "Upload tests results for macos"
      
       - name: Push changes
