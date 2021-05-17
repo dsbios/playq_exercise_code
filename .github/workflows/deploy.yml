@@ -22,6 +22,30 @@ jobs:
         run: |
           g++ ${{ env.WALL_PARAMETER }} -o ${{ env.PROGRAM_NAME }}-linux.bin code.cpp
 
+      - name: Testing builded bin
+        run: |
+          echo foo | ./${{ env.PROGRAM_NAME }}-linux.bin >> test-linux.txt
+
+      - name: Commit files
+        run: |
+          git config --local user.email "test@test.test"
+          git config --local user.name "github-actions[bot]"
+          git add test-linux.txt errors-linux.log
+          git commit -m "Upload tests results for linux"
+     
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: outs
+
+      - name: Upload actifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-linux
+          path: |
+            test-linux.txt
+
       - name: aws creds
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -44,6 +68,30 @@ jobs:
         run: |
           g++ ${{ env.WALL_PARAMETER }} -o ${{ env.PROGRAM_NAME }}-macos.bin code.cpp
 
+      - name: Testing builded bin
+        run: |
+          echo foo | ./${{ env.PROGRAM_NAME }}-macos.bin >> test-macos.txt
+
+      - name: Commit files
+        run: |
+          git config --local user.email "test@test.test"
+          git config --local user.name "github-actions[bot]"
+          git add test-macos.txt errors-macos.log
+          git commit -m "Upload tests results for macos"
+     
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: outs
+
+      - name: Upload actifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-macos
+          path: |
+            test-macos.txt
+      
       - name: aws creds
         uses: aws-actions/configure-aws-credentials@v1
         with:
