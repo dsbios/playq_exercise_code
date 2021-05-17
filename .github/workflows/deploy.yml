@@ -30,6 +30,7 @@ jobs:
         run: |
           git config --local user.email "test@test.test"
           git config --local user.name "github-actions[bot]"
+          git pull
           git add test-linux.txt
           git commit -m "Upload tests results for linux"
      
@@ -63,8 +64,6 @@ jobs:
     steps:
       - name: Clone repo
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
 
       - name: g++ build
         run: |
@@ -78,6 +77,7 @@ jobs:
         run: |
           git config --local user.email "test@test.test"
           git config --local user.name "github-actions[bot]"
+          git pull
           git add test-macos.txt
           git commit -m "Upload tests results for macos"
      
