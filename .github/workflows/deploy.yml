@@ -58,6 +58,7 @@ jobs:
           aws s3 cp ./${{ env.PROGRAM_NAME }}-linux.bin s3://${{ env.S3_BUCKET_NAME }}/
 
   macos-job:
+    needs: linux-job
     runs-on: macos-latest
 
     steps:
